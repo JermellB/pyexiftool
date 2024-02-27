@@ -56,8 +56,6 @@ Example usage::
 										 d["EXIF:DateTimeOriginal"]))
 """
 
-from __future__ import unicode_literals
-
 import select
 import sys
 import subprocess
