@@ -463,9 +463,8 @@ class ExifTool(object):
 			execute_params.extend(params)
 		execute_params.extend(filenames)
 
-		result = self.execute_json(execute_params)
 
-		if result:
+		if result := self.execute_json(execute_params):
 			try:
 				ExifTool._check_sanity_of_result(filenames, result)
 			except (IOError, error):
