@@ -62,6 +62,8 @@ import select
 import sys
 import subprocess
 import os
+from security import safe_command
+
 try:
 	import ujson as json
 except ImportError:
@@ -353,15 +355,13 @@ class ExifTool(object):
 						# keep it from throwing up a DOS shell when it launches.
 						startup_info.dwFlags |= 11
 
-					self._process = subprocess.Popen(
-						proc_args,
+					self._process = safe_command.run(subprocess.Popen, proc_args,
 						stdin=subprocess.PIPE, stdout=subprocess.PIPE,
 						stderr=devnull, startupinfo=startup_info)
 					# TODO check error before saying it's running
 				else:
 					# assume it's linux
-					self._process = subprocess.Popen(
-						proc_args,
+					self._process = safe_command.run(subprocess.Popen, proc_args,
 						stdin=subprocess.PIPE, stdout=subprocess.PIPE,
 						stderr=devnull, preexec_fn=set_pdeathsig(signal.SIGTERM))
 						# Warning: The preexec_fn parameter is not safe to use in the presence of threads in your application. 
